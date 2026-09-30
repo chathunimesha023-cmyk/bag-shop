@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>T&amp;C BAGS — Handcrafted &amp; Everyday Bags Built for the Distance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,450;0,9..144,600;1,9..144,450&family=Work+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="grain-overlay" aria-hidden="true"></div>
+
+<!-- ============ TOAST NOTIFICATION ============ -->
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<!-- ============ CART DRAWER ============ -->
+<div class="cart-backdrop" id="cartBackdrop"></div>
+<aside class="cart-drawer" id="cartDrawer" aria-label="Shopping Bag">
+  <div class="cart-header">
+    <div class="cart-title-wrap">
+      <h3>Your Bag</h3>
+      <span class="cart-badge-total" id="cartBadgeTotal">0 items</span>
+    </div>
+    <button class="cart-close" id="cartClose" aria-label="Close cart">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+    </button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-empty">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      <p>Your shopping bag is currently empty.</p>
+      <a href="#collection" class="btn btn-line btn-sm" id="cartStartShopping">Explore Collection</a>
+    </div>
+  </div>
+  <div class="cart-footer" id="cartFooter" style="display: none;">
+    <div class="cart-subtotal">
+      <span>Subtotal</span>
+      <span class="subtotal-amount" id="cartSubtotalAmount">Rs. 0.00</span>
+    </div>
+    <p class="cart-shipping-note">Taxes &amp; standard shipping calculated at checkout.</p>
+    <button class="btn btn-primary btn-block" id="checkoutBtn">Proceed to Checkout</button>
+    <button class="btn-text btn-block clear-cart" id="clearCartBtn">Clear Bag</button>
+  </div>
+</aside>
+
+<!-- ============ QUICK SEARCH MODAL ============ -->
+<div class="search-modal" id="searchModal" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="search-box">
+    <div class="search-input-wrap">
+      <svg width="20" height="20" viewBox="0 0 18 18" fill="none"><circle cx="8" cy="8" r="6.2" stroke="currentColor" stroke-width="1.3"/><line x1="12.6" y1="12.6" x2="17" y2="17" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+      <input type="text" id="searchInput" placeholder="Search by name, material, or style..." autocomplete="off">
+      <button class="search-close" id="searchClose" aria-label="Close search">&times;</button>
+    </div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+</div>
+
+<!-- ============ NAV ============ -->
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#top" class="brand">T&amp;C BAGS<span class="brand-dot">·</span></a>
+    <nav class="nav-links" id="navLinks">
+      <a href="#collection">Collection</a>
+      <a href="#craft">Our Craft</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#visit">Visit &amp; Contact</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="icon-btn" id="searchBtn" aria-label="Search collection">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="8" cy="8" r="6.2" stroke="currentColor" stroke-width="1.3"/><line x1="12.6" y1="12.6" x2="17" y2="17" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+      </button>
+      <button class="icon-btn cart-btn" id="cartOpenBtn" aria-label="Open Cart">
+        <svg width="19" height="19" viewBox="0 0 20 20" fill="none"><path d="M4 6h12l-1 10.5a1.5 1.5 0 0 1-1.5 1.4H6.5A1.5 1.5 0 0 1 5 16.5L4 6Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><path d="M7 6V4.6A2.6 2.6 0 0 1 9.6 2h.8A2.6 2.6 0 0 1 13 4.6V6" stroke="currentColor" stroke-width="1.3"/></svg>
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="top">
+  <div class="hero-media">
+    <img src="https://images.unsplash.com/photo-1525103504173-8dc1582c7430?auto=format&fit=crop&w=1800&q=80" alt="Bags built for the journey" id="heroImg">
+    <div class="hero-scrim"></div>
+  </div>
+
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <span>HANDCRAFTED FINISH</span><span class="tdot">&#9670;</span>
+      <span>PREMIUM MATERIALS</span><span class="tdot">&#9670;</span>
+      <span>CUSTOM BRASS HARDWARE</span><span class="tdot">&#9670;</span>
+      <span>MADE TO OUTLAST THE TRIP</span><span class="tdot">&#9670;</span>
+      <span>HANDCRAFTED FINISH</span><span class="tdot">&#9670;</span>
+      <span>PREMIUM MATERIALS</span><span class="tdot">&#9670;</span>
+      <span>CUSTOM BRASS HARDWARE</span><span class="tdot">&#9670;</span>
+      <span>MADE TO OUTLAST THE TRIP</span><span class="tdot">&#9670;</span>
+    </div>
+  </div>
+
+  <div class="hero-content">
+    <p class="eyebrow reveal">Bespoke &amp; Everyday Bags · Crafted in Small Batches</p>
+    <h1 class="hero-title reveal">Bags built<br>for the distance.</h1>
+    <p class="hero-sub reveal">Selected hides, precision stitching, and sturdy hardware designed to endure daily life. From structured designer silhouettes to ultra-soft corduroy and quilted totes, nothing about our bags is disposable.</p>
+    <div class="hero-ctas reveal">
+      <a href="#collection" class="btn btn-primary">Shop the Collection</a>
+      <a href="#craft" class="btn btn-ghost">See How It's Made</a>
+    </div>
+  </div>
+
+  <div class="stamp" aria-hidden="true">
+    <svg viewBox="0 0 160 160" class="stamp-svg">
+      <defs>
+        <path id="stampCircle" d="M 80,80 m -62,0 a 62,62 0 1,1 124,0 a 62,62 0 1,1 -124,0"/>
+      </defs>
+      <circle cx="80" cy="80" r="74" fill="none" stroke="currentColor" stroke-width="1"/>
+      <circle cx="80" cy="80" r="50" fill="none" stroke="currentColor" stroke-width="1"/>
+      <text font-size="10.2" letter-spacing="3.2" fill="currentColor">
+        <textPath href="#stampCircle" startOffset="1%">EST. T&amp;C BAGS · ARTISAN LEATHER &amp; TOTES ·</textPath>
+      </text>
+      <text x="80" y="76" text-anchor="middle" font-family="'Fraunces', serif" font-size="14" fill="currentColor">STUDIO</text>
+      <text x="80" y="93" text-anchor="middle" font-family="'Fraunces', serif" font-size="14" fill="currentColor">TESTED</text>
+    </svg>
+  </div>
+
+  <a href="#collection" class="scroll-cue" aria-label="Scroll to collection">
+    <span></span>
+  </a>
+</section>
+
+<!-- ============ COLLECTION ============ -->
+<section class="collection" id="collection">
+  <div class="section-head reveal">
+    <p class="eyebrow">The Collection</p>
+    <h2>Four Distinct Styles. No Filler.</h2>
+    <p class="section-sub">Each piece is crafted with purpose, tactile textures, and refined proportions. We would rather make a few bags exceptionally well than mass-produce bags with compromise.</p>
+  </div>
+
+  <div class="product-grid">
+
+    <!-- Card 1: Two-Tone Structured Handbag -->
+    <article class="product-card reveal" data-category="handbag" data-id="bag-01">
+      <div class="product-media">
+        <img src="assets/bag-structured-satchel.jpg" alt="The Structured Top-Handle Satchel with brass disc closure" loading="lazy">
+        <span class="product-tag">Bestseller</span>
+      </div>
+      <div class="product-label">
+        <div class="label-row">
+          <h3>The Structured Top-Handle Satchel</h3>
+          <span class="price">Rs.4,500.00</span>
+        </div>
+        <p class="material">Two-tone leather &bull; Solid brass disc closure</p>
+        <p class="blurb">Architectural silhouette with contrast cream side gussets, smooth black body, caramel top handle, and magnetic gold medallion lock.</p>
+        <button class="btn btn-line add-to-cart-btn" 
+          data-id="bag-01" 
+          data-title="The Structured Top-Handle Satchel" 
+          data-price="4500" 
+          data-material="Two-tone leather &bull; Brass lock"
+          data-img="assets/bag-structured-satchel.jpg">
+          Add to Bag
+        </button>
+      </div>
+    </article>
+
+    <!-- Card 2: Cloud Puffer Quilted Tote -->
+    <article class="product-card reveal" data-category="tote" data-id="bag-02">
+      <div class="product-media">
+        <img src="assets/bag-cloud-puffer.jpg" alt="The Cloud Puffer Quilted Tote in soft pastel blush" loading="lazy">
+        <span class="product-tag">Trending</span>
+      </div>
+      <div class="product-label">
+        <div class="label-row">
+          <h3>The Cloud Puffer Tote</h3>
+          <span class="price">Rs.2,850.00</span>
+        </div>
+        <p class="material">Quilted soft-shell &bull; Reinforced shoulder straps</p>
+        <p class="blurb">Featherlight cushioned comfort in soft blush pink with horizontal quilted baffles, twin external bottle slip pockets, and expansive interior volume.</p>
+        <button class="btn btn-line add-to-cart-btn" 
+          data-id="bag-02" 
+          data-title="The Cloud Puffer Tote" 
+          data-price="2850" 
+          data-material="Quilted soft-shell &bull; Blush Pink"
+          data-img="assets/bag-cloud-puffer.jpg">
+          Add to Bag
+        </button>
+      </div>
+    </article>
+
+    <!-- Card 3: Brown Corduroy Bear Tote -->
+    <article class="product-card reveal" data-category="tote" data-id="bag-03">
+      <div class="product-media">
+        <img src="assets/bag-corduroy-bear.jpg" alt="The Sweet Beat Bear Corduroy Tote in warm cinnamon" loading="lazy">
+        <span class="product-tag">Studio Pick</span>
+      </div>
+      <div class="product-label">
+        <div class="label-row">
+          <h3>The Sweet Beat Corduroy Tote</h3>
+          <span class="price">Rs.1,950.00</span>
+        </div>
+        <p class="material">Heavyweight ribbed corduroy &bull; Bear embroidery</p>
+        <p class="blurb">Warm autumn caramel corduroy featuring line-art bear embroidery, script detailing, robust shoulder drop, and effortless casual charm.</p>
+        <button class="btn btn-line add-to-cart-btn" 
+          data-id="bag-03" 
+          data-title="The Sweet Beat Corduroy Tote" 
+          data-price="1950" 
+          data-material="Ribbed corduroy &bull; Caramel Brown"
+          data-img="assets/bag-corduroy-bear.jpg">
+          Add to Bag
+        </button>
+      </div>
+    </article>
+
+    <!-- Card 4: Bunny Canvas Pocket Crossbody -->
+    <article class="product-card reveal" data-category="crossbody" data-id="bag-04">
+      <div class="product-media">
+        <img src="assets/bag-bunny-canvas.jpg" alt="The Kawaii Bunny Utility Crossbody Tote in pastel pink and white" loading="lazy">
+        <span class="product-tag">New Arrival</span>
+      </div>
+      <div class="product-label">
+        <div class="label-row">
+          <h3>The Bunny Utility Crossbody Tote</h3>
+          <span class="price">Rs.2,200.00</span>
+        </div>
+        <p class="material">Durable dual-tone canvas &bull; Quick-release buckle</p>
+        <p class="blurb">Playful two-tone design featuring dimensional bunny ears, front utility buckle pouch, twin tote handles, and detachable adjustable shoulder strap.</p>
+        <button class="btn btn-line add-to-cart-btn" 
+          data-id="bag-04" 
+          data-title="The Bunny Utility Crossbody Tote" 
+          data-price="2200" 
+          data-material="Duo-tone canvas &bull; Pastel Pink"
+          data-img="assets/bag-bunny-canvas.jpg">
+          Add to Bag
+        </button>
+      </div>
+    </article>
+
+    <!-- Card 5: Studio Consultation CTA -->
+    <article class="product-card product-card--cta reveal">
+      <div class="cta-inner">
+        <p class="eyebrow">Custom Order or Inquiries?</p>
+        <h3>Looking for a specific finish or bulk order?<br>We handle every piece with care.</h3>
+        <p class="cta-desc">Reach out directly to discuss customized straps, corporate gifting, or color combinations.</p>
+        <a href="#visit" class="btn btn-primary">Talk to the Studio</a>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ============ CRAFT / PROCESS ============ -->
+<section class="craft" id="craft">
+  <div class="craft-media reveal">
+    <img src="assets/bag-structured-satchel.jpg" alt="Handcrafted bag details, edge finishing and brass hardware" loading="lazy">
+    <div class="craft-badge">
+      <span class="badge-num">100%</span>
+      <span class="badge-txt">Quality Inspected</span>
+    </div>
+  </div>
+  <div class="craft-content">
+    <p class="eyebrow reveal">From Blueprint to Finish</p>
+    <h2 class="reveal">Four steps. Zero shortcuts.</h2>
+    <p class="section-sub reveal">Every bag passes through rigorous design, pattern cutting, and manual assembly to guarantee lasting durability and unmatched tactile comfort.</p>
+
+    <ol class="process-list">
+      <li class="process-step reveal">
+        <span class="step-num">01</span>
+        <div>
+          <h4>Curated Materials</h4>
+          <p>We hand-select full-grain hides, premium corduroy weaves, and high-density padded textiles that feel substantial from day one.</p>
+        </div>
+      </li>
+      <li class="process-step reveal">
+        <span class="step-num">02</span>
+        <div>
+          <h4>Precision Cutting &amp; Skiving</h4>
+          <p>Pattern pieces are cut accurately and stress points are reinforced with bonded edge-work so folds lie clean without bulk.</p>
+        </div>
+      </li>
+      <li class="process-step reveal">
+        <span class="step-num">03</span>
+        <div>
+          <h4>Heavy-Duty Stitching</h4>
+          <p>Sewn with bonded high-tensile threads, double-box stitched handle anchors, and stress-tested load points that won't give out.</p>
+        </div>
+      </li>
+      <li class="process-step reveal">
+        <span class="step-num">04</span>
+        <div>
+          <h4>Hardware &amp; Final Inspection</h4>
+          <p>Every clasp, buckle, magnetic snap, and zipper is manually cycle-tested before the bag is packed and stamped with the studio seal.</p>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ REVIEWS / QUOTE ============ -->
+<section class="quote-band" id="reviews">
+  <div class="quote-inner reveal">
+    <span class="quote-mark" aria-hidden="true">&#8220;</span>
+    <p class="quote-text">The craftsmanship and attention to detail are stunning. The structured satchel keeps its shape beautifully, and the stitching is rock solid. Best purchase I've made all year.</p>
+    <p class="quote-attr">&mdash; Ananya S., carrying T&amp;C Bags</p>
+  </div>
+</section>
+
+<!-- ============ NEWSLETTER ============ -->
+<section class="newsletter" id="visit">
+  <div class="newsletter-inner reveal">
+    <p class="eyebrow">Studio Field Notes</p>
+    <h2>Stay in the loop.</h2>
+    <p>Get notified about new seasonal drops, limited restocks, and studio updates. No spam, only genuine craftsmanship news.</p>
+    <form class="newsletter-form" id="newsletterForm">
+      <input type="email" id="newsletterEmail" placeholder="you@domain.com" required aria-label="Email address">
+      <button type="submit" class="btn btn-primary">Join Studio</button>
+    </form>
+    <p class="newsletter-note" id="newsletterNote" role="status" aria-live="polite"></p>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <p class="brand footer-brand-mark">T&amp;C BAGS<span class="brand-dot">·</span></p>
+      <p>Handcrafted essentials &amp; everyday bags built to last.</p>
+    </div>
+    <div class="footer-cols">
+      <div class="footer-col">
+        <h5>Shop</h5>
+        <a href="#collection">Structured Satchels</a>
+        <a href="#collection">Cloud Puffer Totes</a>
+        <a href="#collection">Corduroy &amp; Canvas</a>
+      </div>
+      <div class="footer-col">
+        <h5>Studio</h5>
+        <a href="#craft">Our Craft</a>
+        <a href="#reviews">Reviews</a>
+        <a href="#visit">Contact &amp; Studio</a>
+      </div>
+      <div class="footer-col">
+        <h5>Customer Care</h5>
+        <a href="#visit">Shipping &amp; Delivery</a>
+        <a href="#visit">Warranty &amp; Care</a>
+        <a href="#visit">Studio FAQ</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2026 T&amp;C BAGS Co. All bags designed to be carried and cherished.</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
